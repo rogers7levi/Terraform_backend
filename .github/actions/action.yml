@@ -1,1 +1,33 @@
+name: Configure AWS Profile
+description: "This action configures AWS CLI with specified credentials and optional role assumption."
+
+inputs:
+  aws_region:
+    description: "Region to operate within"
+    required: false
+    default: "eu-west-2"
+  aws_access_key:
+    description: "AWS access key"
+    required: true
+  aws_secret_key:
+    description: "AWS secret key"
+    required: true
+  aws_profile_name:
+    description: "Profile name for AWS operations"
+    required: false
+    default: "default"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup AWS Profile
+      run: |
+        # Configure the AWS CLI with the provided inputs
+        echo "Configuring AWS CLI..."
+        aws configure set default.region ${{ inputs.aws_region }} || exit 1
+        aws configure set aws_access_key_id ${{ inputs.aws_access_key }} || exit 1
+        aws configure set aws_secret_access_key ${{ inputs.aws_secret_key }} || exit 1
+        aws configure set profile.${{ inputs.aws_profile_name }}.region ${{ inputs.aws_region }} || exit 1
+        echo "AWS CLI configured successfully."
+      shell: bash
 

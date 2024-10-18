@@ -1,0 +1,6 @@
+region               = "eu-west-2" 
+dynamodb_table       = "project-terraform-state-lock" 
+encrypt              = "true" 
+workspace_key_prefix = "main-project"
+bucket               = "project-terraform-state" 
+key                  = "dev-terraform.tfstate"
